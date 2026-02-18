@@ -5,38 +5,42 @@
   <title>Dyn-VPP: Video Prediction Policy Optimization for Improved Visual Dynamics</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Dyn-VPP: Video Prediction Policy Optimization for Improved Visual Dynamics in Visual-Language-Action Models across CALVIN, L-CALVIN, and real-world benchmarks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0b0c10;
-      --bg-alt: #12141c;
-      --fg: #e5e7eb;
-      --accent: #fbbf24;
-      --accent-soft: rgba(251, 191, 36, 0.15);
-      --muted: #9ca3af;
-      --border: #1f2937;
-      --link: #38bdf8;
-      --code-bg: #111827;
+      --bg: #ffffff;
+      --bg-alt: #f8f9fa;
+      --fg: #1a1a1a;
+      --fg-muted: #4a4a4a;
+      --border: #e0e0e0;
+      --link: #0066cc;
+      --accent: #2563eb;
+      --author: #0066cc;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
-        "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #111827 0, #020617 50%, #000 100%);
+      font-family: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
       color: var(--fg);
       line-height: 1.6;
+      font-size: 16px;
+      font-weight: 500;
     }
     a { color: var(--link); text-decoration: none; }
     a:hover { text-decoration: underline; }
+
     header {
       position: sticky;
       top: 0;
       z-index: 20;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.8), transparent);
-      border-bottom: 1px solid rgba(55, 65, 81, 0.7);
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
     }
     .nav {
-      max-width: 1040px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 0.75rem 1.25rem;
       display: flex;
@@ -44,250 +48,196 @@
       justify-content: space-between;
       font-size: 0.95rem;
     }
-    .nav-left {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .badge {
-      font-size: 0.7rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #e5e7eb;
-    }
+    .nav-left { font-weight: 600; color: var(--fg); }
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 1.5rem;
       font-size: 0.9rem;
     }
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-    .nav-links a:hover {
-      color: var(--fg);
-    }
+    .nav-links a { color: var(--fg-muted); }
+    .nav-links a:hover { color: var(--fg); }
 
     main {
-      max-width: 1040px;
+      max-width: 960px;
       margin: 0 auto;
-      padding: 2.5rem 1.25rem 4rem;
+      padding: 2rem 1.25rem 4rem;
     }
 
     .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.8fr);
-      gap: 2.5rem;
-      align-items: center;
-      padding-bottom: 2.5rem;
+      padding-bottom: 2rem;
       border-bottom: 1px solid var(--border);
     }
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
     .hero-title {
-      font-size: clamp(2.1rem, 3vw, 2.6rem);
+      font-size: clamp(1.75rem, 2.5vw, 2.25rem);
       font-weight: 700;
-      letter-spacing: 0.01em;
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+      text-align: center;
     }
     .hero-subtitle {
       font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 34rem;
-      margin-bottom: 1.25rem;
+      color: var(--author);
+      margin-bottom: 1rem;
+      text-align: center;
+      font-weight: 600;
     }
     .hero-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-      font-size: 0.85rem;
-      color: var(--muted);
+      justify-content: center;
+      gap: 0.35rem 0.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: var(--fg-muted);
+      font-weight: 500;
     }
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.75rem;
-      margin-bottom: 0.75rem;
+      justify-content: center;
+      gap: 0.5rem;
     }
     .btn {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.55rem 0.95rem;
-      border-radius: 999px;
+      gap: 0.35rem;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
       font-size: 0.9rem;
       font-weight: 500;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: radial-gradient(circle at top left, rgba(17, 24, 39, 0.9), rgba(15, 23, 42, 0.9));
+      border: 1px solid var(--border);
+      background: var(--bg);
       color: var(--fg);
     }
     .btn-primary {
-      border-color: rgba(252, 211, 77, 0.9);
-      background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.18), rgba(24, 24, 27, 0.96));
-      box-shadow: 0 0 40px rgba(250, 204, 21, 0.15);
+      background: var(--fg);
+      color: var(--bg);
+      border-color: var(--fg);
     }
-    .btn:hover {
-      text-decoration: none;
-      border-color: rgba(248, 250, 252, 0.9);
-    }
-    .hero-note {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
-
-    .hero-card {
-      background: radial-gradient(circle at top left, rgba(251, 191, 36, 0.06), rgba(15, 23, 42, 0.98));
-      border-radius: 1.1rem;
-      padding: 1rem;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.7);
-    }
-    .hero-card-inner {
-      border-radius: 0.7rem;
-      padding: 1rem;
-      background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.22), rgba(15, 23, 42, 0.96));
-      border: 1px solid rgba(55, 65, 81, 0.9);
-    }
-    .kpi-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 0.75rem;
-    }
-    .kpi {
-      flex: 1 1 120px;
-      padding: 0.45rem 0.65rem;
-      border-radius: 0.7rem;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      font-size: 0.8rem;
-    }
-    .kpi-label {
-      color: var(--muted);
-      font-size: 0.75rem;
-      margin-bottom: 0.15rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-    }
-    .kpi-value {
-      font-weight: 600;
-      font-size: 0.98rem;
-    }
-    .hero-card-caption {
-      font-size: 0.8rem;
-      color: var(--muted);
-      margin-top: 0.4rem;
-    }
+    .btn:hover { text-decoration: none; opacity: 0.85; }
 
     section {
       padding-top: 2.5rem;
-      padding-bottom: 1.25rem;
+      padding-bottom: 1.5rem;
       border-bottom: 1px solid var(--border);
     }
-    section:last-of-type {
-      border-bottom: none;
-    }
+    section:last-of-type { border-bottom: none; }
     .section-title {
-      font-size: 1.25rem;
-      font-weight: 600;
+      font-size: 1.35rem;
+      font-weight: 700;
       margin-bottom: 0.75rem;
+      text-align: center;
     }
     .section-subtitle {
       font-size: 0.95rem;
-      color: var(--muted);
+      color: var(--fg-muted);
       margin-bottom: 1rem;
+      font-weight: 500;
     }
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 1.25rem 0 0.5rem;
+      text-align: center;
+    }
+    h4 {
+      font-weight: 700;
+      text-align: center;
+    }
+    p { margin-bottom: 0.6rem; font-weight: 500; }
+    ul { margin-left: 1.25rem; margin-bottom: 0.6rem; }
+    strong { font-weight: 700; }
+    .accent { color: var(--accent); font-weight: 600; }
+    li { margin-bottom: 0.25rem; }
+
+    .img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: var(--bg-alt);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+    .img-placeholder.square { aspect-ratio: 1; }
+    .img-placeholder.wide { aspect-ratio: 2/1; }
+
+    .video-placeholder {
+      width: 100%;
+      max-width: 720px;
+      aspect-ratio: 16/9;
+      background: #1a1a1a;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.7);
+      font-size: 1rem;
+      margin: 1rem auto;
+    }
+
+    .table-placeholder {
+      width: 100%;
+      min-height: 180px;
+      background: var(--bg-alt);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fg-muted);
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    .fig-caption {
+      font-size: 0.85rem;
+      color: var(--fg-muted);
+      margin-top: 0.35rem;
+      margin-bottom: 1rem;
+      font-style: italic;
+      font-weight: 500;
+    }
+
+    .question-block {
+      margin: 1.25rem 0;
+      padding: 1rem;
+      background: var(--bg-alt);
+      border-radius: 8px;
+      border-left: 4px solid var(--accent);
+    }
+    .question-block .q { font-weight: 700; margin-bottom: 0.5rem; color: var(--accent); }
+    .question-block .finding { margin-top: 0.75rem; font-size: 0.95rem; font-weight: 500; }
+    .question-block .finding strong { color: var(--accent); }
+
+    pre {
+      background: var(--bg-alt);
+      border-radius: 6px;
+      padding: 1rem;
+      font-size: 0.8rem;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+    code { font-family: "SF Mono", Monaco, Consolas, monospace; }
 
     .grid-2 {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 1.75rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
     }
-    @media (max-width: 900px) {
-      .grid-2 {
-        grid-template-columns: minmax(0, 1fr);
-      }
-    }
-    h3 {
-      font-size: 1.05rem;
-      margin: 0.6rem 0 0.3rem;
-    }
-    p { margin-bottom: 0.6rem; }
-
-    ul {
-      margin-left: 1.1rem;
-      margin-bottom: 0.6rem;
-    }
-    li { margin-bottom: 0.3rem; }
-
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      padding: 0.15rem 0.5rem;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      font-size: 0.75rem;
-      color: var(--muted);
-      margin-right: 0.25rem;
-      margin-bottom: 0.25rem;
-    }
-
-    .tag-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.3rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .card {
-      border-radius: 0.9rem;
-      padding: 0.9rem 1rem;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      margin-bottom: 0.7rem;
-      font-size: 0.9rem;
-    }
-    .card-title {
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-    }
-    .card-metric {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 0.3rem;
-    }
-
-    pre {
-      background: var(--code-bg);
-      border-radius: 0.6rem;
-      padding: 0.75rem 0.9rem;
-      font-size: 0.8rem;
-      overflow-x: auto;
-      border: 1px solid rgba(31, 41, 55, 0.9);
-    }
-    code {
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-        "Courier New", monospace;
+    @media (max-width: 768px) {
+      .grid-2 { grid-template-columns: 1fr; }
     }
 
     footer {
       padding-top: 2rem;
       font-size: 0.8rem;
-      color: var(--muted);
+      color: var(--fg-muted);
       text-align: center;
     }
   </style>
@@ -295,13 +245,11 @@
 <body>
   <header>
     <div class="nav">
-      <div class="nav-left">
-        <span>Dyn-VPP</span>
-        <span class="badge">VPM Post-Training</span>
-      </div>
+      <div class="nav-left">Dyn-VPP</div>
       <nav class="nav-links">
-        <a href="#overview">Overview</a>
-        <a href="#method">Method</a>
+        <a href="#abstract">Abstract</a>
+        <a href="#model">The Model</a>
+        <a href="#findings">Questions & Key Findings</a>
         <a href="#results">Results</a>
         <a href="#bibtex">BibTeX</a>
       </nav>
@@ -310,300 +258,192 @@
 
   <main>
     <section class="hero">
-      <div>
-        <h1 class="hero-title">
-          Dyn-VPP: Video Prediction Policy Optimization for Improved Visual Dynamics
-        </h1>
-        <p class="hero-subtitle">
-          A post-training framework that directly optimizes the visual dynamics of video prediction models,
-          translating better dynamics into stronger long-horizon manipulation across
-          <strong>CALVIN ABC→D</strong>, <strong>L-CALVIN</strong>, and <strong>real-world</strong> benchmarks.
-        </p>
-        <div class="hero-meta">
-          <span>Wenxuan Song</span><span>·</span>
-          <span>Han Zhao</span><span>·</span>
-          <span>Fuhao Li</span><span>·</span>
-          <span>Ziyang Zhou</span><span>·</span>
-          <span>Pengxiang Ding</span><span>·</span>
-          <span>Donglin Wang</span><span>·</span>
-          <span>Haoang Li</span>
-        </div>
-        <div class="hero-meta">
-          <span>HKUST (GZ)</span><span>·</span>
-          <span>Zhejiang University</span><span>·</span>
-          <span>Westlake University</span><span>·</span>
-          <span>Tsinghua University</span><span>·</span>
-          <span>Shandong University</span><span>·</span>
-          <span>OpenHelix Team</span>
-        </div>
-        <div class="hero-actions">
-          <!-- TODO: replace hrefs with real links -->
-          <a class="btn btn-primary" href="#" target="_blank" rel="noreferrer">
-            📄 Paper (arXiv)
-          </a>
-          <a class="btn" href="#" target="_blank" rel="noreferrer">
-            💻 Code (GitHub)
-          </a>
-          <a class="btn" href="#" target="_blank" rel="noreferrer">
-            🎥 Video
-          </a>
-        </div>
-        <p class="hero-note">
-          Contact: <a href="mailto:dynvpp@126.com">dynvpp@126.com</a>
-        </p>
-      </div>
-
-      <div class="hero-card">
-        <div class="hero-card-inner">
-          <div class="kpi-row">
-            <div class="kpi">
-              <div class="kpi-label">CALVIN ABC→D</div>
-              <div class="kpi-value">+0.28 ↑ Avg. Len</div>
-              <div class="card-metric">98.0 → 94.8 → 91.3 → 88.3 → 83.1</div>
-            </div>
-            <div class="kpi">
-              <div class="kpi-label">L-CALVIN</div>
-              <div class="kpi-value">+1.2 ↑ Avg. Len</div>
-              <div class="card-metric">5.53 → <strong>6.73</strong></div>
-            </div>
-          </div>
-          <div class="kpi-row">
-            <div class="kpi">
-              <div class="kpi-label">Vision–Action Coupling</div>
-              <div class="kpi-value">ER / ERR ↑</div>
-              <div class="card-metric">richer Jacobian spectrum vs. base policy</div>
-            </div>
-            <div class="kpi">
-              <div class="kpi-label">Real World</div>
-              <div class="kpi-value">Consistent Gains</div>
-              <div class="card-metric">Agibot Genie 01, multi-task benchmarks</div>
-            </div>
-          </div>
-          <p class="hero-card-caption">
-            Dyn-VPP post-trains a pretrained VPM with GRPO in latent space, improving visual dynamics and
-            yielding stronger long-horizon policies across multiple simulated and real-world benchmarks.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section id="overview">
-      <h2 class="section-title">1. Overview</h2>
-      <p class="section-subtitle">
-        Inspired by video-action models such as
-        <a href="https://mimic-video.github.io/" target="_blank" rel="noreferrer">mimic-video</a>
-        and efficient VLA paradigms like
-        <a href="https://vla-adapter.github.io/" target="_blank" rel="noreferrer">VLA-Adapter</a>,
-        Dyn-VPP focuses on directly improving <em>visual dynamics</em> inside a pretrained video prediction
-        backbone, rather than redesigning the full VLA stack.
+      <h1 class="hero-title">
+        Dyn-VPP: Video Prediction Policy Optimization for Improved Visual Dynamics
+      </h1>
+      <p class="hero-subtitle">
+        Wenxuan Song · Han Zhao · Fuhao Li · Ziyang Zhou · Pengxiang Ding · Donglin Wang · Haoang Li
       </p>
-      <div class="grid-2">
-        <div>
-          <h3>Motivation</h3>
-          <p>
-            Modern VLAs excel at semantic grounding but often fall short on precise physical dynamics,
-            especially for long-horizon, language-conditioned manipulation.
-            Existing VPM-based VLAs learn dynamics via supervised training on trajectories,
-            which can leave residual mismatch between predicted and expert dynamics.
-          </p>
-          <p>
-            Dyn-VPP treats the VPM’s denoising trajectory as a sequence of actions and
-            <strong>optimizes it directly with reinforcement learning</strong>, using a reward that compares
-            predicted futures to expert trajectories in latent space. This upgrades the dynamics
-            quality without altering the architecture of the base policy.
-          </p>
-        </div>
-        <div>
-          <h3>Contributions</h3>
-          <ul>
-            <li>
-              <strong>Visual-dynamics-centric post-training</strong>: a GRPO-based optimization strategy
-              that directly updates VPM denoising in latent space.
-            </li>
-            <li>
-              <strong>Multi-benchmark validation</strong>:
-              consistent improvements on <strong>CALVIN ABC→D</strong>,
-              <strong>L-CALVIN</strong>, and multiple <strong>real-world tasks</strong> on Agibot and beyond.
-            </li>
-            <li>
-              <strong>Mechanistic analysis</strong> of vision–action coupling via
-              effective rank of the Jacobian, showing richer coupling after post-training.
-            </li>
-            <li>
-              <strong>Plug-in design</strong>: no change to the backbone architecture;
-              Dyn-VPP seamlessly boosts existing VPM-based VLAs.
-            </li>
-          </ul>
-        </div>
+      <div class="hero-meta">
+        HKUST (GZ) · Zhejiang University · Westlake University · Tsinghua University · Shandong University · OpenHelix Team
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#" target="_blank" rel="noreferrer">Paper</a>
+        <a class="btn" href="#" target="_blank" rel="noreferrer">Code</a>
+        <a class="btn" href="#" target="_blank" rel="noreferrer">Video</a>
       </div>
     </section>
 
-    <section id="method">
-      <h2 class="section-title">2. Method: Dyn-VPP in a Nutshell</h2>
+    <!-- Why Choose Dyn-VPP? Demo Video -->
+    <section>
+      <h2 class="section-title">Why Choose Dyn-VPP?</h2>
       <p class="section-subtitle">
-        Dyn-VPP treats a pretrained video prediction model as a policy over denoising steps, and
-        applies group-wise PPO (GRPO) to align its predictions with expert dynamics in latent space.
+        Dyn-VPP directly optimizes visual dynamics in video prediction models via policy gradient, translating better dynamics into stronger long-horizon manipulation across <span class="accent">CALVIN</span>, <span class="accent">L-CALVIN</span>, and real-world benchmarks—without any architectural changes.
+      </p>
+      <div class="video-placeholder">
+        [Demo Video Placeholder — Replace with YouTube/Bilibili embed]
+      </div>
+    </section>
+
+    <!-- Abstract -->
+    <section id="abstract">
+      <h2 class="section-title">Abstract</h2>
+      <p>
+        Video action models are a promising foundation for Vision–Language–Action (VLA) because they can learn rich <span class="accent">visual dynamics</span> directly from video. However, likelihood-oriented training of diffusion predictors emphasizes globally plausible futures and does not guarantee <span class="accent">precision-critical visual dynamics</span> needed for manipulation, so small prediction errors can be amplified by downstream policies.
+      </p>
+      <p>
+        We propose <span class="accent">Dyn-VPP</span>, a post-training framework that casts multi-step denoising as policy optimization and aligns predicted future latents with <span class="accent">expert visual dynamics</span> via a verifiable terminal reward, without modifying any architecture. This enables explicit optimization of dynamics signals that are not captured by likelihood-only training. As a result, Dyn-VPP yields more accurate visual dynamics and improves downstream task execution. Experiments across diverse simulated and real-world manipulation settings show improved dynamics consistency and consistently higher task success.
+      </p>
+      <img src="assets/teaser.png" alt="Dyn-VPP Teaser" class="teaser-img" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Figure 1.</strong> Overall of Dyn-VPP. Our post-training framework introduces reinforcement learning from verified rewards in place of the surrogate objective in Video Action Models, enabling direct optimization of task-specific goals in training video prediction model (VPM). This approach improves the accuracy of VPM's predictive visual representations, leading to enhanced action generation and task performance. Notably, our method demonstrates significant improvements not only in simulated environments but also in real-world scenarios, showcasing its robustness and versatility across diverse settings.
+      </p>
+    </section>
+
+    <!-- The Model -->
+    <section id="model">
+      <h2 class="section-title">The Model</h2>
+      <img src="assets/overview.png" alt="Dyn-VPP Overview" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Figure 2.</strong> Overview of the <strong>Dyn-VPP</strong> training paradigm. In the pre-training stage, the video prediction model (VPM) and action generation model (AGM) are trained on expert demonstrations. In the policy optimization stage, the VPM generates future latents via a hybrid denoising process (SDE at the first step, ODE thereafter); verified rewards are computed by comparing predicted and expert latents, and the VPM is optimized with GRPO to improve precision-critical visual dynamics for downstream action generation.
+      </p>
+      <p>
+        Dyn-VPP presents a post-training framework that optimizes video prediction policies for improved visual dynamics. Specifically, we (1) formulate video denoising during generation as a Markov Decision Process (MDP); (2) introduce a stochastic sampler (Euler–Ancestral) that makes the denoising trajectory amenable to likelihood-based optimization; and (3) apply GRPO with an Euler Hybrid sampler that injects stochasticity only at the first denoising step, enabling the model to directly align visual dynamics while preserving temporal coherence.
+      </p>
+      <p>
+        The reward combines L1 distance and cosine similarity in latent space between predicted and expert future representations. By improving the fidelity of learned visual dynamics, Dyn-VPP enables more accurate video predictions, which transfer to downstream policies for more effective action generation.
+      </p>
+    </section>
+
+    <!-- Questions & Key Findings -->
+    <section id="findings">
+      <h2 class="section-title">Questions & Key Findings</h2>
+      <p class="section-subtitle">
+        We aim to answer the following questions from our experiments:
       </p>
 
-      <div class="grid-2">
-        <div>
-          <h3>2.1 Visual Dynamics Objective</h3>
-          <p>
-            Let the VPM map an initial noisy latent to a sequence of intermediate latents
-            \( \{z_t\} \) along a denoising trajectory. Dyn-VPP defines a reward that measures
-            how well the generated future matches an expert future:
-          </p>
-          <ul>
-            <li><strong>L1 distance</strong> between predicted and expert latents.</li>
-            <li><strong>Cosine similarity</strong> for directional alignment in latent space.</li>
-          </ul>
-          <p>
-            The combined reward drives the VPM toward futures that are not only visually plausible
-            but also dynamically consistent with expert rollouts.
-          </p>
-
-          <h3>2.2 GRPO-Based Optimization</h3>
-          <p>
-            We adopt <strong>Group Relative Policy Optimization (GRPO)</strong> to stabilize
-            reinforcement learning over denoising trajectories:
-          </p>
-          <ul>
-            <li>Form groups of candidate denoising trajectories for each scenario.</li>
-            <li>Compute relative advantages and apply PPO-style clipping per group.</li>
-            <li>Jointly update the VPM while leaving the downstream action model intact or lightly tuned.</li>
-          </ul>
-          <p>
-            Compared to DDPO, GRPO yields more stable training and larger gains in long-horizon success rates.
-          </p>
+      <div class="question-block">
+        <div class="q">Q1. To what extent does our approach improve the quality of visual dynamics modeling?</div>
+        <img src="assets/exp1.png" alt="Evaluation on Visual Dynamics" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+        <p class="fig-caption">
+          <strong>Figure 3.</strong> Evaluation on Visual Dynamics. The figure reports the L1 loss between VPM-generated latents and ground-truth latents over training (quantitative), and qualitative comparisons of predicted vs. ground-truth future observations. The optimized VPM exhibits improved alignment with expert dynamics, including more accurate object poses, spatial relationships, and contact progression.
+        </p>
+        <div class="finding">
+          <strong>Key Finding 1.</strong> As shown in the figure, the quality of the learned latent representations, measured in terms of visual dynamics, exhibits an overall improving trend throughout training. Although fluctuations are observed at intermediate stages, the visual dynamics encoded in the latent space become progressively more coherent and structured as training proceeds. A qualitative comparison between the baseline and predicted future observations demonstrates improved alignment with expert dynamics—the optimized VPM produces latent representations that decode into more accurate object poses, spatial relationships, and contact progression.
         </div>
+      </div>
 
-        <div>
-          <h3>2.3 Key Design Choices</h3>
-          <div class="card">
-            <div class="card-title">Hybrid Denoising</div>
-            <div class="card-metric">1-step SDE vs. 5-step SDE</div>
-            <p>
-              We apply SDE-based stochasticity only at the <strong>first</strong> denoising step.
-              This mitigates reward hacking that can arise when later steps are perturbed,
-              while preserving enough exploration for effective optimization.
-            </p>
-          </div>
+      <div class="question-block">
+        <div class="q">Q2. Do improvements in visual dynamics modeling translate into measurable gains in policy performance?</div>
+        <img src="assets/exp2.png" alt="Effectiveness of improved visual dynamics on CALVIN ABC→D" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+        <p class="fig-caption">
+          <strong>Table 1.</strong> Effectiveness of improved visual dynamics on CALVIN ABC→D. The table reports task completion in a row (1–5), average trajectory length (Avg. Len), average effective rank (Avg. ER), and average ER ratio (Avg. ERR). Post-training both VPM and AGM achieves the best performance; improvements over the base policy are in bold.
+        </p>
+        <div class="finding">
+          <strong>Key Finding 2.</strong> Even when the downstream AGM is frozen, optimizing the VPM consistently improves overall performance. Furthermore, after fine-tuning the VPM with our method, enabling training of the downstream AG leads to substantially larger improvements. These results indicate that unoptimized visual dynamics can misguide downstream policy learning. Once the visual dynamics are properly optimized, more accurate visual-dynamics representations can be translated into better action dynamics, highlighting the advantage of our approach that directly updates visual dynamics via policy-gradient optimization.
+        </div>
+      </div>
 
-          <div class="card">
-            <div class="card-title">Latent vs. Pixel Rewards</div>
-            <p>
-              Dyn-VPP computes rewards directly in <strong>latent space</strong> instead of decoded pixels.
-              Latent rewards better capture task-relevant dynamics and semantics,
-              leading to stronger performance than pixel-level objectives on CALVIN ABC→D.
-            </p>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Post-Training Schedule</div>
-            <p>
-              We first perform supervised fine-tuning of the VPM, then apply GRPO-based post-training
-              for about <strong>1.4k steps</strong>, which empirically achieves the best trade-off between
-              performance and stability.
-            </p>
-          </div>
+      <div class="question-block">
+        <div class="q">Q3. Through what mechanisms does enhanced dynamics information lead to improved policy performance?</div>
+        <div class="finding">
+          We measure vision–action coupling using the <strong>effective rank (ER)</strong> of the Jacobian J = ∂a/∂v and the normalized <strong>Average ER Ratio (ERR)</strong>. Larger ER indicates richer vision–action coupling.
+        </div>
+        <img src="assets/exp3.png" alt="SVD Analysis Comparison" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+        <p class="fig-caption">
+          <strong>Figure 4.</strong> SVD analysis comparison between VPP and Dyn-VPP (Ours). Left: singular value spectrum (log scale). Right: cumulative contribution of singular values. Dyn-VPP (Ours) exhibits a more gradual cumulative curve and maintains larger singular values across a broader range of indices, indicating a higher effective rank and richer vision–action coupling.
+        </p>
+        <div class="finding">
+          <strong>Key Finding 3.</strong> Compared with the Base Policy, our proposed paradigm achieves substantial improvements in both Avg. ER and Avg. ERR. This indicates that the downstream AGM relies on a larger number of mutually independent visual directions in the learned visual dynamics when generating actions—i.e., the vision–action coupling becomes richer—which in turn leads to fundamental performance gains during the action execution stage.
         </div>
       </div>
     </section>
 
+    <!-- Results -->
     <section id="results">
-      <h2 class="section-title">3. Results Across Multiple Benchmarks</h2>
-      <p class="section-subtitle">
-        Dyn-VPP is evaluated on simulated long-horizon benchmarks and real robots, consistently
-        improving over a strong VPM-based base policy across multiple task suites.
+      <h2 class="section-title">Results</h2>
+
+      <h3>3.1 Numerical Comparison on Multiple Benchmarks</h3>
+
+      <h4 style="font-size:1rem; margin-top:1rem;"><span class="accent">CALVIN</span> ABC→D</h4>
+      <img src="assets/dat1.png" alt="Performance on CALVIN ABC→D benchmark" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Table 2.</strong> Performance on the CALVIN ABC→D benchmark. The table reports task completion in a row (1–5) and average trajectory length (Avg. len) for VLM-based and VPM-based VLAs. Dyn-VPP (Ours) achieves the best performance; our method's row is highlighted.
+      </p>
+      <p>
+        Table 2 summarizes comparison with VLM-based and VPM-based VLAs on CALVIN ABC→D. Although our method is built upon VPP, our post-training procedure—which directly optimizes visual dynamics without any architectural modifications—substantially improves VPP's performance and also surpasses approaches based on other model families. Compared with prior VPP-based extensions such as Tri-VLA, our method requires neither additional network components nor extra data, yet seamlessly boosts the base model's performance.
       </p>
 
-      <div class="grid-2">
-        <div>
-          <h3>3.1 CALVIN ABC→D</h3>
-          <div class="tag-row">
-            <span class="pill">Benchmark: CALVIN ABC→D</span>
-            <span class="pill">Long-horizon, 5-step</span>
-            <span class="pill">Language-conditioned manipulation</span>
-          </div>
-          <p>
-            Under the standard ABC→D protocol, we compare Dyn-VPP with both VLM-based and
-            VPM-based VLAs, including OpenVLA, Seer, VPP, Tri-VLA and others.
-            Despite building directly on VPP, Dyn-VPP’s post-training significantly improves
-            task completion and average trajectory length.
-          </p>
-          <div class="card">
-            <div class="card-title">Effectiveness of Better Visual Dynamics</div>
-            <p>
-              On CALVIN ABC→D, our post-trained VPM + AGM achieves:
-            </p>
-            <ul>
-              <li>Higher success for 1–5 tasks in a row vs. the base policy.</li>
-              <li>Increased <strong>Avg. Len</strong>, <strong>Avg. ER</strong>,
-                  and <strong>Avg. ERR</strong>, indicating richer vision–action coupling.</li>
-            </ul>
-          </div>
-          <div class="card">
-            <div class="card-title">Comparison with SOTA VLAs</div>
-            <p>
-              Dyn-VPP outperforms strong baselines such as Tri-VLA and Seer on CALVIN ABC→D,
-              while requiring <strong>no additional network components or extra data</strong>
-              beyond the base VPP checkpoint.
-            </p>
-          </div>
-        </div>
+      <h4 style="font-size:1rem; margin-top:1rem;"><span class="accent">L-CALVIN</span> (10-step Long-Horizon)</h4>
+      <img src="assets/dat2.png" alt="Performance on L-CALVIN" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Table 3.</strong> Performance on L-CALVIN (long-horizon). The table reports tasks completed in sequence (1–10) and average trajectory length (Avg. Len) under the ABC→D protocol. Dyn-VPP (Ours) yields the best results across all task lengths; improvements are highlighted.
+      </p>
+      <p>
+        Our method Dyn-VPP yields larger gains on longer-horizon tasks. This further highlights the importance of improving visual dynamics modeling for long-horizon manipulation, as such tasks involve richer and more diverse dynamics over extended time spans.
+      </p>
 
-        <div>
-          <h3>3.2 L-CALVIN (10-step Long-Horizon)</h3>
-          <div class="tag-row">
-            <span class="pill">Benchmark: L-CALVIN</span>
-            <span class="pill">10-step sequences</span>
-            <span class="pill">ABC→D generalization</span>
-          </div>
-          <p>
-            L-CALVIN extends CALVIN to 10-step task sequences, providing a stricter test of
-            long-horizon control. Dyn-VPP yields consistent improvements over the base policy
-            for all horizons from 1 to 10 and boosts average length from 5.53 to 6.73.
-          </p>
+      <h3>3.2 Qualitative Visualization Across Multiple Benchmarks</h3>
+      <img src="assets/dat3.png" alt="Qualitative visualization across multiple benchmarks" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Figure 5.</strong> Qualitative visualization across multiple benchmarks. The figure presents improved action prediction and manipulation quality on CALVIN, Bridge, and real-world platforms (Agibot Genie 01, Flexiv dual-arm robot), demonstrating reduced hallucination, improved planning coherence, and refined execution. Green frames indicate success; red frames indicate failure.
+      </p>
 
-          <h3 style="margin-top:1.1rem;">3.3 Real-World Benchmarks</h3>
-          <div class="tag-row">
-            <span class="pill">Agibot Genie 01 (dual-arm)</span>
-            <span class="pill">Multi-task real-world</span>
-          </div>
-          <p>
-            We evaluate Dyn-VPP on multiple <strong>real-world benchmarks</strong>,
-            including:
-          </p>
-          <ul>
-            <li>Grasping a target object (apple) in clutter.</li>
-            <li>Single-arm precise pick-and-place of a plate.</li>
-            <li>Bimanual grasp-and-place of two bottles.</li>
-          </ul>
-          <p>
-            Across all these tasks, Dyn-VPP consistently outperforms the base policy,
-            demonstrating that improved visual dynamics translate into more reliable
-            physical execution outside simulation.
-          </p>
-        </div>
-      </div>
+      <h3>3.3 Evaluation on Core Components (Ablation)</h3>
+      <p>We provide ablation analysis of the core components to validate the effectiveness of each design module.</p>
 
-      <div style="margin-top: 1.5rem;">
-        <h3>3.4 Vision–Action Coupling Analysis</h3>
-        <p>
-          To understand <em>how</em> better visual dynamics help, we analyze the
-          effective rank (ER) of the Jacobian \( \mathbf{J} = \partial \mathbf{a} / \partial \mathbf{v} \),
-          and its normalized average ER ratio (ERR).
-          Dyn-VPP systematically increases ER and ERR compared with the base policy,
-          indicating that actions depend on a richer set of independent visual directions.
-        </p>
-      </div>
+      <h4 style="font-size:0.95rem; margin-top:0.75rem;">Post-Training Steps</h4>
+      <img src="assets/abl1.png" alt="Ablation on post-training steps" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Table 4.</strong> Ablation on post-training steps (CALVIN ABC→D). Success rates and average length for different GRPO step counts. Best performance is achieved at 1400 steps; best values are in bold.
+      </p>
+      <p>
+        Our method reaches relatively strong performance within only 400 post-training steps. Despite fluctuations, it consistently outperforms the base policy and achieves best performance at 1400 steps.
+      </p>
+
+      <h4 style="font-size:0.95rem; margin-top:0.75rem;">Optimization Algorithm: DDPO vs. GRPO</h4>
+      <img src="assets/abl2.png" alt="Ablation on optimization algorithm" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Table 5.</strong> Ablation on optimization algorithm. Comparison of DDPO and GRPO on CALVIN ABC→D. GRPO (Ours) achieves the best performance.
+      </p>
+      <p>
+        GRPO consistently outperforms DDPO under the same base policy. We hypothesize that the within-group optimization and clipping scheme in GRPO lead to more stable and informative gradient updates.
+      </p>
+
+      <h4 style="font-size:0.95rem; margin-top:0.75rem;">Hybrid Denoising: 5-step SDE vs. 1-step SDE</h4>
+      <img src="assets/abl3.png" alt="Ablation on hybrid denoising" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Table 6.</strong> Ablation on hybrid denoising: SDE at 5 steps vs. 1 step. Applying SDE only at the first step (Ours) yields the best performance and mitigates reward hacking.
+      </p>
+      <p>
+        Applying SDE only at the first step (Ours) yields the best performance and mitigates reward hacking: the first-step output is fed directly to the policy, whereas perturbing later steps may encourage unintended exploitation.
+      </p>
+
+      <h4 style="font-size:0.95rem; margin-top:0.75rem;">Reward Type: Pixel vs. Latent</h4>
+      <img src="assets/abl4.png" alt="Ablation on reward type" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Table 7.</strong> Ablation on reward type: pixel-level vs. latent-level reward on CALVIN ABC→D. Latent-space reward (Ours) achieves the best performance.
+      </p>
+      <p>
+        The latent-space reward achieves better performance. Pixel-level consistency does not necessarily imply more accurate visual dynamics modeling, whereas latent representations are more aligned with the underlying dynamics and task-relevant semantics.
+      </p>
+
+      <h3>3.4 Real-World Evaluation</h3>
+      <p>
+        Real-world experiments are conducted on the Agibot Genie 01 dual-arm robot. We consider three tasks: (1) grasping a specified target (apple) in clutter, (2) single-arm precise pick-and-place of a plate onto a central saucer, and (3) bimanual simultaneous grasp-and-place of two bottles onto a central plate.
+      </p>
+      <img src="assets/real.png" alt="Real-world evaluation" style="width:100%; max-width:100%; height:auto; border-radius:8px; margin:1rem 0;">
+      <p class="fig-caption">
+        <strong>Figure 6.</strong> Real-world evaluation across multiple task benchmarks. The figure reports performance on three manipulation benchmarks—grasping in clutter, single-arm pick-and-place, and bimanual grasp-and-place—on the Agibot Genie 01 platform. Dyn-VPP (Ours) achieves the best performance across all tasks.
+      </p>
+      <p>
+        Our Dyn-VPP consistently outperforms the base policy in real-world scenarios, demonstrating the effectiveness and robustness of the proposed approach.
+      </p>
     </section>
 
+    <!-- BibTeX -->
     <section id="bibtex">
-      <h2 class="section-title">4. BibTeX</h2>
-      <p class="section-subtitle">
-        If you find Dyn-VPP useful, please consider citing it:
-      </p>
+      <h2 class="section-title">BibTeX</h2>
       <pre><code>@article{song2025dynvpp,
   title   = {Dyn-VPP: Video Prediction Policy Optimization for Improved Visual Dynamics},
   author  = {Wenxuan Song and Han Zhao and Fuhao Li and Ziyang Zhou and
